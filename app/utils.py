@@ -113,7 +113,7 @@ def process_wide(meta_long: list) -> dict[str, list]:
     return meta_wide
 
 
-def process_dict(meta_long: list, iso3_val: str = "") -> dict:
+def process_dict(meta_long: list, iso3_val: str) -> dict:
     """Nests values by key for use in JSOn and YAML.
 
     Args:
