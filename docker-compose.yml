@@ -1,6 +1,5 @@
 services:
   cod-meta:
-    platform: linux/amd64
     build: .
     env_file: .env
     ports:
