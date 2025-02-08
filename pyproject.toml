@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["dict2xml", "fastapi[standard]", "pandas[excel]"]
+dependencies = ["dict2xml", "fastapi[standard]", "pandas[excel,performance]"]
 
 [dependency-groups]
 dev = ["ruff", "taskipy"]
