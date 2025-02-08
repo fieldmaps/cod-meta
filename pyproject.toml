@@ -1,0 +1,29 @@
+[project]
+name = "cod-meta"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["dict2xml", "fastapi[standard]", "pandas[excel]"]
+
+[dependency-groups]
+dev = ["ruff", "taskipy"]
+
+[tool.taskipy.tasks]
+api = "fastapi dev app"
+export = "uv sync -q && uv export -q -o requirements.txt --no-dev --no-hashes"
+ruff = "ruff format && ruff check && ruff format"
+
+[tool.ruff]
+fix = true
+target-version = "py312"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D100", "D104", "INP", "PD010", "S603", "S607"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
