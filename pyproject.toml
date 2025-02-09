@@ -16,7 +16,7 @@ ruff = "ruff format && ruff check && ruff format"
 
 [tool.ruff]
 fix = true
-target-version = "py312"
+target-version = "py313"
 
 [tool.ruff.format]
 docstring-code-format = true
