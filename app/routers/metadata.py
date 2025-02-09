@@ -13,10 +13,10 @@ router = APIRouter()
 def get_csv(iso3: str = "") -> Response:
     meta_list = get_meta(iso3)
     meta_long = process_long(meta_list)
-    file = StringIO()
+    file = BytesIO()
     DataFrame(meta_long).to_csv(file, encoding="utf-8-sig", index=False)
     data = file.getvalue()
-    return Response(content=data, media_type="text/plain")
+    return Response(data, media_type="text/csv")
 
 
 def get_json(iso3: str = "") -> dict:
@@ -30,7 +30,7 @@ def get_xml(iso3: str = "") -> Response:
     meta_long = process_long(meta_list)
     meta_dict = process_dict(meta_long, iso3)
     data = dict2xml({"root": meta_dict})
-    return Response(content=data, media_type="application/xml")
+    return Response(data, media_type="application/xml")
 
 
 def get_yaml(iso3: str = "") -> Response:
@@ -42,7 +42,13 @@ def get_yaml(iso3: str = "") -> Response:
     data = file.getvalue()
     if data.startswith("{}"):
         data = ""
-    return Response(content=data, media_type="text/plain")
+    return Response(
+        data,
+        headers={
+            "Content-Disposition": f"attachment; filename={iso3 or 'yaml'}.yaml",
+        },
+        media_type="application/yaml",
+    )
 
 
 def get_xlsx(iso3: str = "") -> Response:
