@@ -47,10 +47,16 @@ def process_value(key: str, value: Any) -> str | int | bool:  # noqa: ANN401
         value = process_string(value)
     if value.lower() in ["true", "false"]:
         value = value.lower() == "true"
+    elif "currently not known" in value.lower():
+        value = None
     elif key in config.integer_columns:
-        value = int(value)
+        value = "".join(filter(str.isdigit, value))
+        value = None if value == "" else int(value)
     elif key.startswith("date_"):
-        value = datetime.strptime(value, "%B %Y").astimezone(UTC).date().isoformat()
+        if "unknown" in value.lower():
+            value = None
+        else:
+            value = datetime.strptime(value, "%B %Y").astimezone(UTC).date().isoformat()
     elif key == "cod_ab_requires_improvement":
         value = "improvement" in value.lower()
     elif key == "cod_ab_quality_checked":
